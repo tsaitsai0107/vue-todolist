@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/todo.css">
+  <title>Todolist</title>
+</head>
+
+<body>
+  <div id="panel">
+    <h1>Tsaitsai's Todolist</h1>
+    <div class="input-group">
+      <input type="text" placeholder="What do you want to do?" v-model.trim="newTodo" @keyup.enter="addTodo">
+      <button @click.prevent="addTodo">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+
+    <div id="todo-list">
+
+      <ul>
+        <li class="new" v-for="todo, index in todos" :key="todo.id" :class="{ complete: todo.completed}">
+          <div class="d-flex">
+            <input type="checkbox" v-model="todo.completed">
+
+            <label :for="todo.id" @dblclick="enterEdit(todo,$event)" v-show="todo !== editedTodo">{{todo.text}}</label>
+            <input type="text" v-model="todo.text" v-show="todo === editedTodo" @blur="doneEdit(todo,index)" @keyup.enter="doneEdit(todo,index)" @keyup.esc="cancelEdit(todo)">
+
+            <button class="close ml-auto" @click="removeTodo(index)">&times;</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <footer>
+      <p v-bind:title="timeMessage">
+        Made By Tsaitsai <i class="far fa-smile-wink"></i>
+      </p>
+    </footer>
+  </div>
+
+
+  <script src="https://kit.fontawesome.com/66ffb1fa74.js" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="js/vueTodo.js"></script>
+
+</body>
+
+</html>
